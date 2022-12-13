@@ -3,17 +3,57 @@
 <head>
 	<meta charset="utf-8">
 	<script>
-		// TODO: create a handler
-    window.addEventListener("load", function(){
-        // TODO: register the handler
-    });
+function setSearchEngine() {
+	// TODO: create a handler
+	let actions = {
+    	"google": "https://www.google.com/",
+        "duckduckgo": "https://duckduckgo.com",
+        "bing": "https://www.bing.com/search",
+        "ask": "https://www.ask.com/web"
+    };
+
+	let form = document.getElementById("searchForm");
+	let buttonSelected = document.querySelector("input[name=engines]:checked");
+
+	let query = document.getElementById("q");
+
+	if (! buttonSelected) {
+		let errorBox = document.getElementById("errorBox");
+		let errorMsg = document.getElementById("errorMsg");
+		errorBox.style.visiblity = "visible";
+		errorMsg.style.visiblity = "visible";
+		errorMsg.innerHTML = "Oops! Which search engine do you want to use?";
+		event.preventDefault();
+	}
+
+	if (query.value ==="") {
+		let errorBox = document.getElementById("errorBox");
+		let errorMsg = document.getElementById("errorMsg");
+		errorBox.style.visiblity = "visible";
+		errorMsg.style.visiblity = "visible";
+		errorMsg.innerHTML = "Oops! You didn't enter anything to search for.";
+		event.preventDefault();
+	}
+
+	let url = actions[buttonSelected.value];
+	form.action = url;
+	}
+	window.addEventListener("load", function(){
+		let form = document.getElementById("searchForm");
+		form.addEventListener("submit", setSearchEngine);
+	})
+
 	</script>
 </head>
 
 <body>
 
-	<form id="searchForm">
-    <!-- TODO: add form elements -->
+	<form id="searchForm" target = "_blank">
+		<input type ="text" class="q" id="q" name="q" /><br />
+		<label><input type = "radio" name = "engines" value = "google" /> Google</label>
+		<label><input type = "radio" name = "engines" value = "duckduckgo"/> DuckDuckGo</label>
+		<label><input type = "radio" name = "engines" value = "bing"/> Bing</label>
+		<label><input type = "radio" name = "engines" value = "ask" /> Ask</label>
+		<button id = "submit" value = "Go">Go!</button>
 	</form>
-
 </body>
